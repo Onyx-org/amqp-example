@@ -1,0 +1,7 @@
+################################
+# ONYX main configuration file #
+################################
+
+id: onyx-amqp-example
+debug: <%app.debug%>
+var.path: <%var.path%>

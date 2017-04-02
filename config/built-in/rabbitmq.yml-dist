@@ -1,0 +1,17 @@
+<%amqp.vhost%>:
+    parameters:
+        with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+        with_unroutable: true # If true, all exchange will be declared with an unroutable config
+
+    exchanges:
+        example:
+            type: topic
+            durable: true
+
+    queues:
+        compressed:
+            durable: true
+            bindings:
+                -
+                    exchange: example
+                    routing_key: "zip.#"

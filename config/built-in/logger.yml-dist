@@ -1,0 +1,14 @@
+kernel:
+  file: kernel.log
+  level: <%logger.level%>
+amqp:
+  level: <%logger.amqp.level%>
+app:
+  level: <%logger.level%>
+plugins:
+  level: <%logger.plugins.level%>
+  handlers.allowIntrospection: <%logger.introspection%>
+options:
+  introspection:
+    enabled: <%logger.introspection%>
+    level: ERROR

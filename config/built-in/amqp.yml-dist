@@ -1,0 +1,7 @@
+broker:
+    host: <%amqp.host%>
+    login: <%amqp.login%>
+    password: <%amqp.password%>
+    vhost: <%amqp.vhost%>
+global:
+    disallowSilentDropping: true
