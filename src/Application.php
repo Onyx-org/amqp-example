@@ -9,6 +9,8 @@ use Puzzle\AMQP\Client;
 use Puzzle\AMQP\Workers\WorkerProvider;
 use Puzzle\AMQP\Messages\Processors\GZip;
 use Puzzle\AMQP\Messages\Processors\AddHeader;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class Application extends \Onyx\Application
 {
@@ -16,11 +18,20 @@ class Application extends \Onyx\Application
     {
         $this->register(new SessionServiceProvider());
         $this->register(new Providers\Monolog([
-            "amqp"
+            "amqp",
+            'workers' => [
+                'handlers' => function($c) {
+                    $handler = new StreamHandler('php://stdout', Logger::INFO);
+
+                    return array($handler);
+                },
+                'disableDefaultHandler' => true,
+            ],
         ]));
         $this->register(new Providers\Twig());
         $this->register(new Providers\Webpack());
         $this->register(new AmqpServiceProvider());
+        $this->register(new Workers\Provider());
     }
 
     protected function initializeServices(): void
@@ -41,7 +52,7 @@ class Application extends \Onyx\Application
         $this[WorkerProvider::MESSAGE_PROCESSORS_SERVICE_KEY] = function ($c){
             return [
                 new AddHeader(["X-Context" => "Onyx AMQP example"]),
-                new GZip()
+                new GZip(),
             ];
         };
         
