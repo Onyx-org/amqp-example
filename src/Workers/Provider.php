@@ -12,7 +12,7 @@ class Provider implements ServiceProviderInterface
     {
         $container['worker.example'] = function($c) {
             $context = new WorkerContext(function() use($c) {
-                return new ExampleWorker();
+                    return new ExampleWorker();
                 },
                 $c['amqp.consumers.simple'],
                 'compressed'
